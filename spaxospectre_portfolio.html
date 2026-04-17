@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SpaxoSpectre — Minecraft Animation Portfolio</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #fff; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a1a 100%); padding: 80px 20px 60px; text-align: center; border-bottom: 1px solid #222; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(ellipse at center, rgba(180,0,0,0.08) 0%, transparent 60%); }
+  .avatar { width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, #8B0000, #1a0a2e); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 36px; font-weight: 700; color: #fff; border: 3px solid #8B0000; position: relative; z-index: 1; }
+  .hero h1 { font-size: 42px; font-weight: 800; letter-spacing: -1px; position: relative; z-index: 1; }
+  .hero h1 span { color: #cc2200; }
+  .hero-sub { font-size: 16px; color: #888; margin-top: 10px; position: relative; z-index: 1; }
+  .hero-sub span { color: #aaa; }
+  .badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 24px; position: relative; z-index: 1; }
+  .badge { background: #1a1a1a; border: 1px solid #333; border-radius: 20px; padding: 6px 16px; font-size: 13px; color: #ccc; }
+  .badge.red { border-color: #8B0000; color: #ff6666; background: rgba(139,0,0,0.1); }
+  .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 32px; position: relative; z-index: 1; }
+  .btn-primary { background: #cc2200; color: #fff; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; transition: background 0.2s; }
+  .btn-primary:hover { background: #aa1800; }
+  .btn-secondary { background: transparent; color: #ccc; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; border: 1px solid #444; transition: all 0.2s; }
+  .btn-secondary:hover { border-color: #666; color: #fff; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: #1a1a1a; border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a; }
+  .stat { background: #0d0d0d; padding: 28px 20px; text-align: center; }
+  .stat-num { font-size: 28px; font-weight: 800; color: #cc2200; }
+  .stat-label { font-size: 12px; color: #666; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  /* SECTIONS */
+  .section { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
+  .section-title { font-size: 11px; font-weight: 600; color: #cc2200; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .section-heading { font-size: 28px; font-weight: 700; margin-bottom: 32px; }
+  .section-heading span { color: #666; font-weight: 400; font-size: 16px; display: block; margin-top: 4px; direction: rtl; }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .about-card { background: #111; border: 1px solid #222; border-radius: 12px; padding: 24px; }
+  .about-card h3 { font-size: 14px; font-weight: 600; color: #cc2200; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .about-card p { font-size: 14px; color: #999; line-height: 1.7; }
+  .about-card p.ar { direction: rtl; text-align: right; }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .skill-card { background: #111; border: 1px solid #222; border-radius: 12px; padding: 20px; }
+  .skill-name { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 10px; }
+  .skill-bar-bg { background: #1a1a1a; border-radius: 4px; height: 6px; overflow: hidden; }
+  .skill-bar { height: 6px; border-radius: 4px; background: linear-gradient(90deg, #8B0000, #cc2200); }
+  .skill-level { font-size: 11px; color: #666; margin-top: 6px; }
+
+  /* VIDEOS */
+  .videos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .video-card { background: #111; border: 1px solid #222; border-radius: 12px; overflow: hidden; transition: border-color 0.2s; }
+  .video-card:hover { border-color: #8B0000; }
+  .video-thumb { aspect-ratio: 16/9; background: #1a1a1a; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+  .video-thumb iframe { width: 100%; height: 100%; border: none; }
+  .video-info { padding: 16px; }
+  .video-title { font-size: 13px; font-weight: 600; color: #fff; line-height: 1.4; margin-bottom: 8px; }
+  .video-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .vtag { font-size: 11px; padding: 2px 8px; border-radius: 4px; background: #1a1a1a; color: #888; border: 1px solid #2a2a2a; }
+
+  /* SERVICES */
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .service-card { background: #111; border: 1px solid #222; border-radius: 12px; padding: 24px; text-align: center; transition: border-color 0.2s; }
+  .service-card:hover { border-color: #8B0000; }
+  .service-card.featured { border-color: #cc2200; background: rgba(139,0,0,0.05); }
+  .service-badge { font-size: 11px; font-weight: 600; padding: 3px 12px; border-radius: 20px; margin-bottom: 12px; display: inline-block; }
+  .sb-basic { background: rgba(59,109,17,0.2); color: #7dc247; }
+  .sb-standard { background: rgba(24,95,165,0.2); color: #6ab0f5; }
+  .sb-premium { background: rgba(133,79,11,0.2); color: #f5a623; }
+  .service-price { font-size: 32px; font-weight: 800; color: #fff; margin: 8px 0; }
+  .service-name { font-size: 14px; font-weight: 600; color: #ccc; margin-bottom: 16px; }
+  .service-features { list-style: none; text-align: left; }
+  .service-features li { font-size: 13px; color: #888; padding: 5px 0; border-bottom: 1px solid #1a1a1a; display: flex; align-items: center; gap: 8px; }
+  .service-features li:last-child { border-bottom: none; }
+  .service-features li::before { content: '✓'; color: #cc2200; font-weight: 700; flex-shrink: 0; }
+
+  /* EXPERIENCE */
+  .exp-list { display: flex; flex-direction: column; gap: 16px; }
+  .exp-item { background: #111; border: 1px solid #222; border-radius: 12px; padding: 24px; display: grid; grid-template-columns: 60px 1fr; gap: 16px; align-items: start; }
+  .exp-icon { width: 48px; height: 48px; border-radius: 10px; background: rgba(139,0,0,0.15); border: 1px solid rgba(139,0,0,0.3); display: flex; align-items: center; justify-content: center; font-size: 22px; }
+  .exp-title { font-size: 15px; font-weight: 600; color: #fff; }
+  .exp-company { font-size: 13px; color: #cc2200; margin-top: 2px; }
+  .exp-date { font-size: 12px; color: #555; margin-top: 4px; }
+  .exp-desc { font-size: 13px; color: #888; line-height: 1.6; margin-top: 10px; }
+
+  /* CONTACT */
+  .contact-box { background: #111; border: 1px solid #333; border-radius: 16px; padding: 48px; text-align: center; }
+  .contact-box h2 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+  .contact-box p { color: #888; font-size: 15px; margin-bottom: 32px; }
+  .contact-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .contact-link { display: flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 500; transition: all 0.2s; border: 1px solid #333; color: #ccc; background: #0d0d0d; }
+  .contact-link:hover { border-color: #cc2200; color: #fff; }
+  .contact-link.fiverr { background: rgba(26,182,98,0.1); border-color: rgba(26,182,98,0.3); color: #1ab662; }
+  .contact-link.fiverr:hover { background: rgba(26,182,98,0.2); }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid #1a1a1a; max-width: 900px; margin: 0 auto; }
+
+  /* FOOTER */
+  footer { text-align: center; padding: 32px 20px; color: #444; font-size: 13px; border-top: 1px solid #1a1a1a; }
+
+  @media(max-width:600px) {
+    .hero h1 { font-size: 28px; }
+    .about-grid { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+    .exp-item { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="avatar">S</div>
+  <h1>Spaxo<span>Spectre</span></h1>
+  <p class="hero-sub">Minecraft Animator · Mine-imator & Blender · <span>Since 2020</span></p>
+  <div class="badges">
+    <span class="badge red">5+ Years Experience</span>
+    <span class="badge">Mine-imator</span>
+    <span class="badge">Blender</span>
+    <span class="badge">Horror & Action</span>
+    <span class="badge">Arabic & English</span>
+  </div>
+  <div class="cta-btns">
+    <a href="https://www.fiverr.com" class="btn-primary">Hire Me on Fiverr</a>
+    <a href="https://www.youtube.com/@spaxo2" class="btn-secondary">Watch My Work</a>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="stat-num">1M+</div><div class="stat-label">Total Views</div></div>
+  <div class="stat"><div class="stat-num">9K+</div><div class="stat-label">Subscribers</div></div>
+  <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Videos Made</div></div>
+  <div class="stat"><div class="stat-num">5+</div><div class="stat-label">Years Animating</div></div>
+</div>
+
+<!-- ABOUT -->
+<div class="section">
+  <div class="section-title">About Me</div>
+  <div class="section-heading">Who is SpaxoSpectre?<span>من أنا؟</span></div>
+  <div class="about-grid">
+    <div class="about-card">
+      <h3>English</h3>
+      <p>I'm SpaxoSpectre — a Minecraft animator with 5+ years of experience creating horror, battle, and comedy animations. I've built two YouTube channels with a combined 9,000+ subscribers and over 1,000,000 views using Mine-imator and Blender. I deliver cinematic, high-quality animations that keep viewers watching from start to finish.</p>
+    </div>
+    <div class="about-card">
+      <h3>العربية</h3>
+      <p class="ar">أنا SpaxoSpectre — محرك رسوم متحركة للماين كرافت بخبرة أكثر من 5 سنوات في صناعة مقاطع الرعب والمعارك والكوميديا. بنيت قناتين على يوتيوب بمجموع أكثر من 9000 مشترك وأكثر من مليون مشاهدة باستخدام Mine-imator وBlender.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- SKILLS -->
+<div class="section">
+  <div class="section-title">Skills</div>
+  <div class="section-heading">What I'm Good At</div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-name">Mine-imator</div>
+      <div class="skill-bar-bg"><div class="skill-bar" style="width:95%"></div></div>
+      <div class="skill-level">Expert — 5 years</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">Blender 3D</div>
+      <div class="skill-bar-bg"><div class="skill-bar" style="width:75%"></div></div>
+      <div class="skill-level">Advanced — 1+ year</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">Fight Choreography</div>
+      <div class="skill-bar-bg"><div class="skill-bar" style="width:90%"></div></div>
+      <div class="skill-level">Expert</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">Horror Scenes</div>
+      <div class="skill-bar-bg"><div class="skill-bar" style="width:92%"></div></div>
+      <div class="skill-level">Expert</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">Camera Work</div>
+      <div class="skill-bar-bg"><div class="skill-bar" style="width:85%"></div></div>
+      <div class="skill-level">Advanced</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">Video Editing</div>
+      <div class="skill-bar-bg"><div class="skill-bar" style="width:80%"></div></div>
+      <div class="skill-level">Advanced</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- SAMPLE WORK -->
+<div class="section">
+  <div class="section-title">Portfolio</div>
+  <div class="section-heading">Sample Work<span>أعمالي</span></div>
+  <div class="videos-grid">
+    <div class="video-card">
+      <div class="video-thumb">
+        <iframe src="https://www.youtube.com/embed/https://youtu.be/sirenheadvswarden" allowfullscreen></iframe>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Siren Head VS Warden 2nd Fight</div>
+        <div class="video-tags">
+          <span class="vtag">Blender</span>
+          <span class="vtag">Action</span>
+          <span class="vtag">Horror</span>
+        </div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="video-thumb">
+        <iframe src="https://www.youtube.com/embed/herobrinevsentity303" allowfullscreen></iframe>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Herobrine vs Entity 303 — Minecraft Horror</div>
+        <div class="video-tags">
+          <span class="vtag">Mine-imator</span>
+          <span class="vtag">Horror</span>
+          <span class="vtag">Battle</span>
+        </div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="video-thumb">
+        <iframe src="https://www.youtube.com/embed/herobrinefinallyfounddream" allowfullscreen></iframe>
+      </div>
+      <div class="video-info">
+        <div class="video-title">Herobrine Finally Found Dream</div>
+        <div class="video-tags">
+          <span class="vtag">Mine-imator</span>
+          <span class="vtag">Story</span>
+          <span class="vtag">Animation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p style="font-size:13px;color:#555;margin-top:16px;text-align:center">View all videos → <a href="https://www.youtube.com/@spaxo2" style="color:#cc2200;text-decoration:none">youtube.com/@spaxo2</a> & <a href="https://www.youtube.com/@spaxo" style="color:#cc2200;text-decoration:none">youtube.com/@spaxo</a></p>
+</div>
+
+<hr class="divider">
+
+<!-- SERVICES -->
+<div class="section">
+  <div class="section-title">Services & Pricing</div>
+  <div class="section-heading">What I Offer<span>الخدمات والأسعار</span></div>
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-badge sb-basic">Basic</span>
+      <div class="service-price">$15</div>
+      <div class="service-name">Quick Fight Scene</div>
+      <ul class="service-features">
+        <li>Up to 1 minute</li>
+        <li>Mine-imator</li>
+        <li>1 revision</li>
+        <li>5 day delivery</li>
+      </ul>
+    </div>
+    <div class="service-card featured">
+      <span class="service-badge sb-standard">Standard ★</span>
+      <div class="service-price">$40</div>
+      <div class="service-name">Full Animation Video</div>
+      <ul class="service-features">
+        <li>Up to 3 minutes</li>
+        <li>Mine-imator or Blender</li>
+        <li>2 revisions</li>
+        <li>10 day delivery</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <span class="service-badge sb-premium">Premium</span>
+      <div class="service-price">$90</div>
+      <div class="service-name">Cinematic Animation</div>
+      <ul class="service-features">
+        <li>Up to 8 minutes</li>
+        <li>Blender quality</li>
+        <li>3 revisions</li>
+        <li>21 day delivery</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- EXPERIENCE -->
+<div class="section">
+  <div class="section-title">Experience</div>
+  <div class="section-heading">Work History</div>
+  <div class="exp-list">
+    <div class="exp-item">
+      <div class="exp-icon">🎬</div>
+      <div>
+        <div class="exp-title">Minecraft Animator & Content Creator</div>
+        <div class="exp-company">SpaxoSpectre — Self-Employed</div>
+        <div class="exp-date">November 2024 — Present</div>
+        <div class="exp-desc">Created 50+ original Minecraft animation videos using Mine-imator and Blender. Grew channel to 2,000+ subscribers and 1,000,000+ total views in under 6 months. Specialized in horror, battle, and comedy animation content.</div>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-icon">📺</div>
+      <div>
+        <div class="exp-title">YouTube Content Creator & Animator</div>
+        <div class="exp-company">Spaxo (First Channel) — Self-Employed</div>
+        <div class="exp-date">2020 — Present</div>
+        <div class="exp-desc">Produced Minecraft animation content for 5+ years. Accumulated 7,000+ subscribers. Specialized in horror, battle scenes, and character-driven storytelling using Mine-imator.</div>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-icon">⚡</div>
+      <div>
+        <div class="exp-title">Mine-imator & Blender Animator</div>
+        <div class="exp-company">Freelance</div>
+        <div class="exp-date">2020 — Present</div>
+        <div class="exp-desc">5+ years experience animating Minecraft content. Skilled in cinematic camera work, character rigging, lighting, fight choreography, and horror scene composition.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- CONTACT -->
+<div class="section">
+  <div class="contact-box">
+    <h2>Let's Work Together</h2>
+    <p>Have a Minecraft animation idea? I'm ready to bring it to life.<br>خايف تطلب؟ تواصل معي وأنا أساعدك 😄</p>
+    <div class="contact-links">
+      <a href="https://www.fiverr.com" class="contact-link fiverr">Fiverr — Hire Me</a>
+      <a href="https://www.youtube.com/@spaxo2" class="contact-link">SpaxoSpectre YouTube</a>
+      <a href="https://www.youtube.com/@spaxo" class="contact-link">Spaxo YouTube</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2025 SpaxoSpectre · Minecraft Animator · Made with Mine-imator & Blender
+</footer>
+
+</body>
+</html>
